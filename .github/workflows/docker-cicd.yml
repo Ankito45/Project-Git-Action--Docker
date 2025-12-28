@@ -38,31 +38,21 @@ jobs:
         pip install pytest-cov
         python -m pytest --cov=app tests/
 
-  build:
-    name: Build Docker Image
+  docker:
     needs: test
     runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Build Docker image
-      run: |
-        docker build -t $DOCKER_USERNAME/$IMAGE_NAME:latest .
-
-  push:
-    name: Push Docker Image
-    needs: build
-    runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
 
     - name: Login to DockerHub
       run: |
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
-        -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          -u "$DOCKER_USERNAME" --password-stdin
 
-    - name: Push image
+    - name: Build Docker image
+      run: |
+        docker build -t $DOCKER_USERNAME/$IMAGE_NAME:latest .
+
+    - name: Push Docker image
       run: |
         docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
