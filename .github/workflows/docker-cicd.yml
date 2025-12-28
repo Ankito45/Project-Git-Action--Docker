@@ -39,6 +39,7 @@ jobs:
         python -m pytest --cov=app tests/
 
   docker:
+    name: Build and Push Docker Image
     needs: test
     runs-on: ubuntu-latest
     steps:
