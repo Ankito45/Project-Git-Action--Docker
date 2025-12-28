@@ -48,8 +48,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ankit0017/flask-app:latest .
-
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-app:latest .
 
   push:
     name: Push Docker Image
@@ -66,4 +65,4 @@ jobs:
 
     - name: Push image
       run: |
-        docker push ankit0017/flask-app:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
