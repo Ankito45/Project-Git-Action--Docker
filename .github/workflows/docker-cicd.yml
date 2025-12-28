@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 env:
-  DOCKER_USERNAME: ankit0017
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   IMAGE_NAME: flask-task-manager
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-app:latest .
+        docker build -t $DOCKER_USERNAME/$IMAGE_NAME:latest .
 
   push:
     name: Push Docker Image
@@ -65,4 +65,4 @@ jobs:
 
     - name: Push image
       run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
